@@ -23,26 +23,22 @@ def get_filters():
             city=str(input("Input the City from the list: chicago, new york city, washington: "))
             city=city.lower()
             if city in CITY_DATA.keys():
-                #print("You successfully entered a valid city")
                 break
             else:
                 print("Please enter a valid city")
         except:
             print("Please enter a valid city")
-    #import pdb; pdb.set_trace()
     # get user input for month (all, january, february, ... , june)
     while True:
         try:
             month=str(input("Select the Month for Analyzing Data (January - June) or All for Analyzing all month_list data: "))
             month=month.lower()
             if month in month_list:
-                #print("You successfully entered a valid month")
                 break
             else:
                 print("Please enter a valid month")
         except:
             print("Please enter a valid month")
-    #import pdb; pdb.set_trace()
     # get user input for day of week (all, monday, tuesday, ... sunday)
     while True:
         try:
@@ -91,8 +87,6 @@ def load_data(city, month, day):
 
         day = day_list.index(day)
         df = df.loc[df['day_of_week'] == day]
-    #print(df.head())
-    #print(df.tail())
     return df
 
 
