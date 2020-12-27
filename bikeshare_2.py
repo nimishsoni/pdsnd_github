@@ -9,8 +9,8 @@ all - represents no filter
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
-months = ['january', 'february', 'march', 'april', 'may', 'june', 'all']
-days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all']
+month_list = ['january', 'february', 'march', 'april', 'may', 'june', 'all']
+day_list = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all']
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -27,32 +27,28 @@ def get_filters():
             city=str(input("Input the City from the list: chicago, new york city, washington: "))
             city=city.lower()
             if city in CITY_DATA.keys():
-                #print("You successfully entered a valid city")
                 break
             else:
                 print("Please enter a valid city")
         except:
             print("Please enter a valid city")
-    #import pdb; pdb.set_trace()
     # get user input for month (all, january, february, ... , june)
     while True:
         try:
-            month=str(input("Select the Month for Analyzing Data (January - June) or All for Analyzing all months data: "))
+            month=str(input("Select the Month for Analyzing Data (January - June) or All for Analyzing all month_list data: "))
             month=month.lower()
-            if month in months:
-                #print("You successfully entered a valid month")
+            if month in month_list:
                 break
             else:
                 print("Please enter a valid month")
         except:
             print("Please enter a valid month")
-    #import pdb; pdb.set_trace()
     # get user input for day of week (all, monday, tuesday, ... sunday)
     while True:
         try:
-            day=str(input("Select the Day of the Week for Analyzing Data or All for Analyzing all Days data: "))
+            day=str(input("Select the Day of the Week for Analyzing Data or All for Analyzing all day_list data: "))
             day=day.lower()
-            if day in days:
+            if day in day_list:
                 #print("You successfully entered a valid Day of the Week")
                 break
             else:
@@ -84,8 +80,8 @@ def load_data(city, month, day):
     df['day_of_week'] = df['Start Time'].dt.dayofweek
     # filter by month if applicable
     if month != 'all':
-        # use the index of the months list to get the corresponding int
-        month = months.index(month)+1
+        # use the index of the month_list list to get the corresponding int
+        month = month_list.index(month)+1
         # filter by month to create the new dataframe
         df = df.loc[df['month'] == month]
 
@@ -93,10 +89,8 @@ def load_data(city, month, day):
     if day != 'all':
         # filter by day of week to create the new dataframe
 
-        day = days.index(day)
+        day = day_list.index(day)
         df = df.loc[df['day_of_week'] == day]
-    #print(df.head())
-    #print(df.tail())
     return df
 
 
@@ -108,12 +102,12 @@ def time_stats(df):
 
     # display the most common month
     frequent_month_no = df['month'].value_counts().idxmax() - 1
-    frequent_month = months[frequent_month_no]
+    frequent_month = month_list[frequent_month_no]
     print("The Most common month of Travel is: ", frequent_month)
 
     # display the most common day of week
     frequent_day_no = df['day_of_week'].value_counts().idxmax()
-    frequent_day = days[frequent_day_no]
+    frequent_day = day_list[frequent_day_no]
     print("\nThe Most common day of the week for Travel is: ", frequent_day)
 
     # display the most common start hour
